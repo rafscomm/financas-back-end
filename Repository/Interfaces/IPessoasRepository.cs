@@ -2,9 +2,7 @@
 
 namespace financas.Repository.Interfaces;
 
-public interface IPessoasRepository
+public interface IPessoasRepository : IRepository<Pessoas>
 {
-    public Task<IEnumerable<PessoasDTO>> GetAllAsync();
-    public Task<PessoasDTO> Insert(PessoasDTO pesd);
-    public Task<PessoasDTO> GetById(int id);
+
 }

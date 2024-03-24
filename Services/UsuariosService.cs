@@ -19,13 +19,13 @@ public class UsuariosService : IUsuariosService
     public async Task<UsuariosDTO> Insert(UsuariosDTO usr)
     {
 
-        var user = await _usuariosRepository.Insert(usr);
-        return user;
+        var user = await _usuariosRepository.Insert(usr.toModel());
+        return usr;
     }
 
     public async Task<UsuariosDTO> GetById(int id)
     {
         var usr = await _usuariosRepository.GetById(id);
-        return usr;
+        return usr.toDto();
     }
 }

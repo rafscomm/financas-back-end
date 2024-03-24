@@ -2,9 +2,7 @@
 
 namespace financas.Repository.Interfaces;
 
-public interface IUsuariosRepository
+public interface IUsuariosRepository : IRepository<Usuarios>
 {
-    public Task<UsuariosDTO> Insert(UsuariosDTO usr);
-    public Task<UsuariosDTO> GetById(int id);
     
 }

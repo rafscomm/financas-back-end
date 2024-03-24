@@ -14,22 +14,22 @@ public class PessoasService: IPessoasService
         _pessoasRepository = _pessoas;
     }
 
+
     public async Task<IEnumerable<PessoasDTO>> GetAllAsync()
     {
         var pes = await _pessoasRepository.GetAllAsync();
-
-        return pes;
+        return pes.Select(p => p.toDto());
     }
 
     public async Task<PessoasDTO> Insert(PessoasDTO pesd)
     {
-        var pes = await _pessoasRepository.Insert(pesd);
-        return pes;
+        var pes = await _pessoasRepository.Insert(pesd.toModel());
+        return pes.toDto();
     }
 
     public async Task<PessoasDTO> GetById(int id)
     {
         var pes = await _pessoasRepository.GetById(id);
-        return pes;
+        return pes.toDto();
     }
 }
