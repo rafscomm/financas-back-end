@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
+using financas.Repository;
+using financas.Repository.Interfaces;
 using financas.Services;
 using financas.Services.Interfaces;
 using financas.Services;
@@ -21,7 +23,15 @@ var mysqlString = builder.Configuration["ConnectionString:DefaultConnection"];
 
 builder.Services.AddDbContext<FnDbContext>(options => options.UseMySql(mysqlString, new MySqlServerVersion(new Version("5.6"))));
 
+builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+
 builder.Services.AddScoped<IDespesasService, DespesasService>();
+builder.Services.AddScoped<IDespesasRepository, DespesasRepository>();
+
+builder.Services.AddScoped<IPessoasService, PessoasService>();
+builder.Services.AddScoped<IPessoasRepository, PessoasRepository>();
+
+builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 builder.Services.AddScoped<IUsuariosService, UsuariosService>();
 
 var supportedCultures = new[]

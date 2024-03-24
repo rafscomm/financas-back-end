@@ -1,5 +1,7 @@
 ﻿using financas.Models;
 using financas.Models.DTO;
+using financas.Repository;
+using financas.Repository.Interfaces;
 using financas.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,40 +10,32 @@ namespace financas.Services;
 
 public class DespesasService: IDespesasService
 {
-    private  FnDbContext _fnDbContext;
+    private  readonly IDespesasRepository _despesasRepository;
 
-    public DespesasService(FnDbContext fnDbContext)
+    public DespesasService(IDespesasRepository _despesas)
     {
-        _fnDbContext = fnDbContext;
+        _despesasRepository = _despesas;
     }
     public async Task<IEnumerable<DespesasDTO>> GetAllAsync()
     {
-        var desp = await _fnDbContext.Despesas.ToListAsync();
-            
-        return desp.Select(d => d.toDTO());
+        var desp = await _despesasRepository.GetAllAsync();
+        return desp.Select(desp => desp.toDTO());
     }
 
     public async Task<DespesasDTO> GetDespesa(int id)
     {
-        var desp = await _fnDbContext.Despesas.SingleOrDefaultAsync(d=>d.Id == id);
-        
+        var desp = await _despesasRepository.GetById(id);
         return desp.toDTO();
     }
 
     public async Task<DespesasDTO> Insert(DespesasDTO desp)
     {
-        
-        Despesas despe = desp.toModel();
-        
-        despe.CreatedAt = DateTime.Now;
-        Usuarios usr = await _fnDbContext.Usuarios.SingleOrDefaultAsync(u => u.Id == desp.UsuarioId.Value);
-        if (usr != null)
+        if (desp != null)
         {
-            despe.Usuario = usr;
+            var res = await _despesasRepository.Insert(desp.toModel());
+            return res.toDTO();
         }
-        await _fnDbContext.AddAsync(despe);
-        await _fnDbContext.SaveChangesAsync();
 
-        return despe.toDTO();
+        return null;
     }
 }

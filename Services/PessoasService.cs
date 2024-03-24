@@ -1,4 +1,5 @@
 ﻿using financas.Models.DTO;
+using financas.Repository.Interfaces;
 using financas.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,33 +7,29 @@ namespace financas.Services;
 
 public class PessoasService: IPessoasService
 {
-    private FnDbContext _fnDbContext;
+    private IPessoasRepository _pessoasRepository;
 
-    public PessoasService(FnDbContext _fnDbContext)
+    public PessoasService(IPessoasRepository _pessoas)
     {
-        this._fnDbContext = _fnDbContext;
+        _pessoasRepository = _pessoas;
     }
 
     public async Task<IEnumerable<PessoasDTO>> GetAllAsync()
     {
-        var pes = await _fnDbContext.Pessoas.ToListAsync();
+        var pes = await _pessoasRepository.GetAllAsync();
 
-        return pes.Select(p => p.toDto());
+        return pes;
     }
 
     public async Task<PessoasDTO> Insert(PessoasDTO pesd)
     {
-        var pes = pesd.toModel();
-        pes.CreatedAt = DateTime.Now;
-        await _fnDbContext.AddAsync(pes);
-        await _fnDbContext.SaveChangesAsync();
-
-        return pes.toDto();
+        var pes = await _pessoasRepository.Insert(pesd);
+        return pes;
     }
 
     public async Task<PessoasDTO> GetById(int id)
     {
-        var pes = await _fnDbContext.Pessoas.SingleOrDefaultAsync(p => p.Id == id);
-        return pes.toDto();
+        var pes = await _pessoasRepository.GetById(id);
+        return pes;
     }
 }

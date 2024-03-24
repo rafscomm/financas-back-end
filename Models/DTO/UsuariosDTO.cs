@@ -6,11 +6,11 @@ namespace financas.Models.DTO;
 public class UsuariosDTO
 {
     public int? Id { get; set; }
-    [Required]
+    [Required] 
     public string Nome { get; set; }
-    [Required, EmailAddress]
+    [Required, EmailAddress] 
     public string Email { get; set; }
-    [Required,MinLength(6)]
+    [Required, MinLength(6)] 
     public string Senha { get; set; }
     public DateTime? LastLogin { get; set; }
 }
