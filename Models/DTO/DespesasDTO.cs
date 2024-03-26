@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+
 
 namespace financas.Models.DTO;
 
@@ -8,7 +8,7 @@ public class DespesasDTO
     public int? Id { get; set; }
     public TipoDespesas Tipo { get; set; } = 0;
     [Required]
-    public string Descricao { get; set; }
+    public string Descricao { get; set; } = String.Empty;
     [Required]
     public DateTime Competencia { get; set; }
     public DateTime? DataPagamento { get; set; }
@@ -17,7 +17,7 @@ public class DespesasDTO
     public decimal Valor { get; set; }
     
     public int? PessoaId { get; set; }
-    public int? UsuarioId { get; set; }
+    public int UsuarioId { get; set; }
     
 }
 
@@ -50,6 +50,7 @@ public static class DespesaExtendsDTO
         desp.Status = despDto.Status;
         desp.Tipo = despDto.Tipo;
         desp.Valor = despDto.Valor;
+        desp.UsuarioId = despDto.UsuarioId;
 
         return desp;
     }

@@ -5,7 +5,7 @@ namespace financas.Models.DTO;
 public class PessoasDTO
 {
     public int? Id { get; set; }
-    [Required, StringLength(5)]
+    [Required]
     public string Nome { get; set; }
     public int? usuarioId { get; set; }
 }

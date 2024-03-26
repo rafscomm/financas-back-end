@@ -24,6 +24,7 @@ var mysqlString = builder.Configuration["ConnectionString:DefaultConnection"];
 builder.Services.AddDbContext<FnDbContext>(options => options.UseMySql(mysqlString, new MySqlServerVersion(new Version("5.6"))));
 
 builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IDespesasService, DespesasService>();
 builder.Services.AddScoped<IDespesasRepository, DespesasRepository>();

@@ -1,31 +1,31 @@
 ﻿using financas.Models.DTO;
-using financas.Repository;
 using financas.Repository.Interfaces;
 using financas.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
+
+
 
 namespace financas.Services;
 
 public class UsuariosService : IUsuariosService
 {
-    private IUsuariosRepository _usuariosRepository;
+    private  readonly IUnitOfWork _unit;
 
-    public UsuariosService(IUsuariosRepository _usuarios)
+    public UsuariosService(IUnitOfWork unit)
     {
-        _usuariosRepository = _usuarios;
+        _unit = unit;
     }
 
     public async Task<UsuariosDTO> Insert(UsuariosDTO usr)
     {
 
-        var user = await _usuariosRepository.Insert(usr.toModel());
-        return usr;
+        var user = await _unit.UsuariosRepository.Insert(usr.toModel());
+        await _unit.Commit();
+        return user.toDto();
     }
 
     public async Task<UsuariosDTO> GetById(int id)
     {
-        var usr = await _usuariosRepository.GetById(id);
+        var usr = await _unit.UsuariosRepository.GetById(id);
         return usr.toDto();
     }
 }

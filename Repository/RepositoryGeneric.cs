@@ -14,7 +14,7 @@ public class Repository<T>: IRepository<T> where T : class
     }   
     public async Task<IEnumerable<T>> GetAllAsync()
     {
-        var result = await _fnDbContext.Set<T>().ToListAsync();
+        var result = await _fnDbContext.Set<T>().AsNoTracking().ToListAsync();
         return result;
     }
 
@@ -27,7 +27,6 @@ public class Repository<T>: IRepository<T> where T : class
     public async Task<T> Insert(T entity)
     {
         await _fnDbContext.Set<T>().AddAsync(entity);
-        await _fnDbContext.SaveChangesAsync();
         return entity;
     }
 }
