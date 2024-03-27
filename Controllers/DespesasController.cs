@@ -1,4 +1,5 @@
 using financas.Models.DTO;
+using financas.Request;
 using financas.Services;
 using financas.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,20 @@ public class DespesasController : ControllerBase
         try
         {
             var desp = await _despesasServices.GetDespesa(id);
+            return Ok(desp);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "Não foi possível consultar a despesa", message = e.Message });
+        }
+    }
+
+    [HttpGet("paginate")]
+    public async Task<IActionResult> GetPaginate([FromQuery] FilterRequest filter)
+    {
+        try
+        {
+            var desp = await _despesasServices.GetDespesaPaginate(filter);
             return Ok(desp);
         }
         catch (Exception e)

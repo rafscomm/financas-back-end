@@ -2,6 +2,7 @@
 using financas.Models.DTO;
 using financas.Repository;
 using financas.Repository.Interfaces;
+using financas.Request;
 using financas.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +29,17 @@ public class DespesasService: IDespesasService
         return desp.toDTO();
     }
 
+    public async Task<IEnumerable<DespesasDTO>> GetDespesaPaginate(FilterRequest filter)
+    {
+        var desp = await _unit.DespesasRepository.GetAllPaginate(filter, desp => desp.Id);
+        return desp.Select(desp => desp.toDTO());
+    }
+
     public async Task<DespesasDTO> Insert(DespesasDTO desp)
     {
             var res = await _unit.DespesasRepository.Insert(desp.toModel());
             await _unit.Commit();
             return res.toDTO();
     }
+    
 }

@@ -1,6 +1,8 @@
 using System.Linq.Expressions;
 using financas.Repository.Interfaces;
+using financas.Request;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
 
 namespace financas.Repository;
 
@@ -28,5 +30,12 @@ public class Repository<T>: IRepository<T> where T : class
     {
         await _fnDbContext.Set<T>().AddAsync(entity);
         return entity;
+    }
+
+    public async Task<IEnumerable<T>> GetAllPaginate(FilterRequest filter, Expression<Func<T,object>> pred)
+    {
+        var result = await _fnDbContext.Set<T>().OrderBy(pred).Skip((filter.Page - 1) * filter.PageSize)
+            .Take(filter.PageSize).ToListAsync();
+        return result;
     }
 }
