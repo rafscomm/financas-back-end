@@ -1,11 +1,8 @@
-﻿using financas.Models;
-using financas.Models.DTO;
-using financas.Repository;
+﻿using financas.Models.DTO;
 using financas.Repository.Interfaces;
 using financas.Request;
+using financas.Response;
 using financas.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace financas.Services;
 
@@ -29,10 +26,11 @@ public class DespesasService: IDespesasService
         return desp.toDTO();
     }
 
-    public async Task<IEnumerable<DespesasDTO>> GetDespesaPaginate(FilterRequest filter)
+    public async Task<PagedListResponse<DespesasDTO>> GetDespesaPaginate(FilterRequest filter)
     {
-        var desp = await _unit.DespesasRepository.GetAllPaginate(filter, desp => desp.Id);
-        return desp.Select(desp => desp.toDTO());
+        var desp =  await _unit.DespesasRepository.GetAllPaginate( desp => desp.Id);
+        var paged = PagedListResponse<DespesasDTO>.ToPagedList(desp.Select(desp=>desp.toDTO()), filter.Page, filter.PageSize);
+        return paged;
     }
 
     public async Task<DespesasDTO> Insert(DespesasDTO desp)

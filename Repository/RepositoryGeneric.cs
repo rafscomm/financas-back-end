@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using financas.Repository.Interfaces;
 using financas.Request;
+using financas.Response;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
 
@@ -32,10 +33,10 @@ public class Repository<T>: IRepository<T> where T : class
         return entity;
     }
 
-    public async Task<IEnumerable<T>> GetAllPaginate(FilterRequest filter, Expression<Func<T,object>> pred)
+    public  async Task<IQueryable<T>> GetAllPaginate(Expression<Func<T,object>> pred)
     {
-        var result = await _fnDbContext.Set<T>().OrderBy(pred).Skip((filter.Page - 1) * filter.PageSize)
-            .Take(filter.PageSize).ToListAsync();
+        var result =  _fnDbContext.Set<T>().OrderBy(pred);
+        await result.ToListAsync();
         return result;
     }
 }

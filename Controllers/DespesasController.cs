@@ -3,6 +3,7 @@ using financas.Request;
 using financas.Services;
 using financas.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace financas.Controllers;
 
@@ -76,8 +77,17 @@ public class DespesasController : ControllerBase
     {
         try
         {
-            var desp = await _despesasServices.GetDespesaPaginate(filter);
-            return Ok(desp);
+            var desp =  await _despesasServices.GetDespesaPaginate(filter);
+            var response = new
+            {
+                desp.CurrentPage,
+                desp.PageSize,
+                desp.TotalCount,
+                desp.HasNext,
+                desp.HasPrevious,
+                desp.Items
+            };
+            return Ok(response);
         }
         catch (Exception e)
         {
