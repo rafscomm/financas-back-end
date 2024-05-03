@@ -5,7 +5,7 @@ namespace financas.Services.Interfaces;
 
 public interface ITokenService
 {
-    JwtSecurityToken GenerateToen(IEnumerable<Claim> claims, IConfiguration _config);
+    JwtSecurityToken GenerateToKen(IEnumerable<Claim> claims, IConfiguration _config);
     string GenereteRefreshToken();
     ClaimsPrincipal GetPrincipalFromExpiredToken(string token, IConfiguration _config);
 }

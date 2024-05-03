@@ -11,5 +11,6 @@ public interface IRepository<T>
     Task<IEnumerable<T>> GetAllAsync();
     Task<T>? GetById(int id);
     Task<T> Insert(T entity);
+    Task<T> Update(T entity);
     Task<IQueryable<T>> GetAllPaginate(Expression<Func<T,object>> pred);
 }

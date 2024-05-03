@@ -2,6 +2,7 @@ using financas.Models.DTO;
 using financas.Request;
 using financas.Services;
 using financas.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

@@ -1,7 +1,11 @@
-﻿namespace financas.Request;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace financas.Request;
 
 public class TokenModelRequest
 {
-    public string? AcessToken { get; set; }
-    public string? RefreshToken { get; set; }
+    [Required]
+    public string AcessToken { get; set; }
+    [Required]
+    public string RefreshToken { get; set; }
 }

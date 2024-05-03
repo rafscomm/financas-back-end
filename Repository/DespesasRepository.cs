@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using financas.Models;
 using financas.Models.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,6 @@ namespace financas.Repository;
 
 public class DespesasRepository : Repository<Despesas>,IDespesasRepository
 {
-
     public DespesasRepository(FnDbContext dbContext) : base(dbContext)
     {
         _fnDbContext = dbContext;

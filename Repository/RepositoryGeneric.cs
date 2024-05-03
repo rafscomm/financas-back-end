@@ -33,6 +33,11 @@ public class Repository<T>: IRepository<T> where T : class
         return entity;
     }
 
+    public async Task<T> Update(T entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public  async Task<IQueryable<T>> GetAllPaginate(Expression<Func<T,object>> pred)
     {
         var result =  _fnDbContext.Set<T>().OrderBy(pred);

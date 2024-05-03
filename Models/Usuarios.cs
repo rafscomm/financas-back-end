@@ -11,7 +11,7 @@ public class Usuarios: IModelBase
     public string Nome { get; set; }
     [Required]
     public string Senha { get; set; }
-    public DateTime LastLogin { get; set; }
-    public DateTime RefreshTokenTime { get; set; }
-    public string RefreshToken { get; set; }
+    public DateTime? LastLogin { get; set; }
+    public DateTime? RefreshTokenTime { get; set; }
+    public string? RefreshToken { get; set; }
 }

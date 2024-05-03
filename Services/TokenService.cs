@@ -10,7 +10,7 @@ namespace financas.Services;
 
 public class TokenService: ITokenService
 {
-    public JwtSecurityToken GenerateToen(IEnumerable<Claim> claims, IConfiguration _config)
+    public JwtSecurityToken GenerateToKen(IEnumerable<Claim> claims, IConfiguration _config)
     {
         var key = _config.GetSection("JWT").GetValue<string>("Key") ?? throw new ArgumentException("Key invalida");
         var privateKey = Encoding.UTF8.GetBytes(key);
